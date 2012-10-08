@@ -1,3 +1,7 @@
+/* Reader Writer Problem
+   Giving preference to Reader
+Author: Sowmya Ravidas */
+
 #include<stdio.h>
 #include<pthread.h>
 #include<semaphore.h>
