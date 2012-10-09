@@ -30,7 +30,7 @@ void *reader(void *arg)
      sem_post(&mutex3);
 
      printf("Data read by the reader%d is %d\n",f,data);
-  //   sleep(1);
+     sleep(1);
      sem_wait(&mutex1);
      rcount = rcount - 1;
      if(rcount==0)
@@ -46,8 +46,7 @@ void *writer(void *arg)
   wcount=wcount+1;
   if(wcount=1)
       sem_wait(&readblock);
-//printf("ndskajjk");
-  sem_post(&mutex2);
+   sem_post(&mutex2);
 
   int f;
   f = ((int) arg);
@@ -56,10 +55,10 @@ void *writer(void *arg)
   data++;
   printf("Data writen by the writer%d is %d\n",f,data);
   sleep(1);
-//  int value;
-//  printf("%d",sem_getvalue(&writeblock,&value));
+  int value;
+  printf("%d",sem_getvalue(&writeblock,&value));
   sem_post(&writeblock);
-  //printf("pldfp"); 
+   
   sem_wait(&mutex2);
   wcount=wcount-1;
   if(wcount=0)
@@ -81,13 +80,13 @@ int main()
   
   for(i=0;i<=2;i++)
   {
-//     pthread_create(&rtid[i],NULL,reader,(void *)i);
+     pthread_create(&rtid[i],NULL,reader,(void *)i);
      pthread_create(&wtid[i],NULL,writer,(void *)i);
   }
   for(i=0;i<=2;i++)
   {
   pthread_join(wtid[i],NULL);
-//  pthread_join(rtid[i],NULL);
+  pthread_join(rtid[i],NULL);
   }
   return 0;
 }
