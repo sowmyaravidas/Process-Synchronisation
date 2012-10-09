@@ -20,18 +20,6 @@ int max(int number[N]) {
     return maximum;
     }
 
-int main(int argc, char ** argv) {
-    int iret[N];
-    void *function(void *);
-    pthread_t thread[N];
-    int i = 0; 
-    for (i = 0; i < N; i++) {
-        iret[i] = pthread_create(&thread[i], NULL, function, (void *)i); 
-        pthread_join(thread[i], NULL);
-    }
-    return EXIT_SUCCESS;
-}
-
 void lock(int i) {
     int j = 0;
     entering[i] = TRUE;
@@ -47,7 +35,7 @@ void unlock(int i) {
     number[i] = 0;
 }
 
-void *function(void *integer) {
+void *fn(void *integer) {
     int i = (int) integer;
     lock(i);
     global++;
@@ -55,4 +43,19 @@ void *function(void *integer) {
     
     unlock(i);
 }    
+
+
+int main()
+{
+    int th[N];
+    void *fn(void *);
+    pthread_t thread[N];
+    int i = 0; 
+    for (i = 0; i < N; i++) {
+        th[i] = pthread_create(&thread[i], NULL, fn, (void *)i); 
+        pthread_join(thread[i], NULL);
+    }
+    return EXIT_SUCCESS;
+}
+
 
